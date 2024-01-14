@@ -96,6 +96,7 @@ const Checkout = () => {
   };
 
   return (
+    <>
     <div className="flex flex-col lg:flex-row gap-8 mx-6 sm:mx-10 md:mx-20 lg:mx-40 my-10 sm:my-20 md:my-32">
       <div className=" p-6 sm:py-8 flex flex-1 flex-col gap-6 rounded-lg bg-white">
         <h1 className="uppercase text-2xl font-bold">Checkout</h1>
@@ -419,6 +420,7 @@ const Checkout = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 

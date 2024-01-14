@@ -2,7 +2,18 @@ import { Data } from "@/app/page";
 import BestGear from "@/components/BestGear";
 import Category from "@/components/Category";
 import LinkButton from "@/components/Link";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const generateMetadata = ({
+  params,
+}: {
+  params: { category: string };
+}): Metadata => {
+  return {
+    title: `${params.category}`,
+  };
+};
 
 const Categories = async ({ params }: { params: { category: string } }) => {
   const response = await fetch("http://localhost:3000/api");
