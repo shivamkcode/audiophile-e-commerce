@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Audiophile Ecommerce Website
+
+Welcome to the audiophile Ecommerce Website! This is a full-stack ecommerce website built using Next.js, TypeScript, Tailwind CSS and uses Sequelize with Mysql2 as database. The website allows users to browse and purchase headphones, speakers, and TWS earphones. Users can create an account, add products to their cart, fill out a checkout form, and receive a confirmation on the thank you page.
+
+## Features
+
+- User authentication: Users can create an account and log in and make purchases.
+- Product catalog: Users can browse a catalog of headphones, speakers, and TWS earphones.
+- Cart management: Users can add products to their cart, update quantities, and remove items.
+- Checkout process: Users can fill out a form with their shipping and payment information to complete their purchase.
+- Order confirmation: After completing the checkout process, users receive a thank you page confirming their order.
+
+## Technologies Used
+
+- Next.js: A React framework for building server-side rendered and static websites.
+- TypeScript: A typed superset of JavaScript that compiles to plain JavaScript.
+- Tailwind CSS: A utility-first CSS framework for quickly building custom user interfaces.
+- Sequelize - It is a modern TypeScript and Node.js ORM for Oracle, Postgres, MySQL, MariaDB, SQLite and SQL Server, and more.
 
 ## Getting Started
 
-First, run the development server:
+To run the website locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository: `git clone https://github.com/shivamkcode/audiophile-e-commerce`
+2. Install dependencies: `npm install`
+3. Run the development server: `npm run dev`
+4. Open your browser and navigate to `http://localhost:3000`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Folder Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/app`: Contains the Next.js pages and api for the website.
+- `/app/api`: Contains serverless functions or API endpoints.
+- `/components`: Contains reusable components used across the website.
+- `/config`: Contains the connection and authorization using sequelize to connect to db.
+- `/models`: Contains models for User and the Cart and exports them.
+- `/public`: Contains all the assets(logo and images) placed according to each page used in the website.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Contributing
 
-## Learn More
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-To learn more about Next.js, take a look at the following resources:
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## Deploy on Vercel
+## Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Shivam kumar - shivambaniya12@gmail.com
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Project Link: https://github.com/shivamkcode/audiophile-e-commerce

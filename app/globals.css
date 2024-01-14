@@ -16,12 +16,18 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+*::-webkit-scrollbar {
+  background-color: transparent;
+  width: 4px;
+}
+*::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: #D87D4A;
+}
+
+.cart {
+  filter: "invert(48%) sepia(100%) saturate(1000%) hue-rotate(340deg) brightness(80%) contrast(100%)";
 }
