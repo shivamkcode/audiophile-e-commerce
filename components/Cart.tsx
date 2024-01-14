@@ -21,7 +21,7 @@ const Cart = () => {
   const [counters, setCounters] = useState<{ [productId: number]: number }>({});
   
   const getData = async () => {
-    const response = await fetch("/api");
+    const response = await fetch("@/app/api");
     const data = await response.json();
     setData(data);
   };
@@ -29,7 +29,7 @@ const Cart = () => {
   const getCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("/api/cart", {
+      const response = await fetch("@/app/api/cart", {
         headers: {
           "Content-Type": "application/json",
           authorization: `${token}`,
@@ -47,7 +47,7 @@ const Cart = () => {
   const deleteCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("/api/cart", {
+      const response = await fetch("@/app/api/cart", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +108,7 @@ const Cart = () => {
     }));
 
     try {
-      const response = await fetch("/api/cart", {
+      const response = await fetch("@/app/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

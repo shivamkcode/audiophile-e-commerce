@@ -57,7 +57,7 @@ const Checkout = () => {
   );
 
   const getData = async () => {
-    const response = await fetch("/api");
+    const response = await fetch("@/app/api");
     const data = await response.json();
     setData(data);
   };
@@ -65,7 +65,7 @@ const Checkout = () => {
   const getCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("/api/cart", {
+      const response = await fetch("@/app/api/cart", {
         headers: {
           "Content-Type": "application/json",
           authorization: `${token}`,

@@ -16,7 +16,7 @@ export const generateMetadata = ({
 };
 
 const Categories = async ({ params }: { params: { category: string } }) => {
-  const response = await fetch("/api");
+  const response = await fetch("@/app/api");
   const data: Data[] = await response.json();
   const category = params.category;
 

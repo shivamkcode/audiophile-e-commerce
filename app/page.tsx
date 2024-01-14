@@ -55,7 +55,7 @@ export interface Data {
 }
 
 const Home = async () => {
-  const response = await fetch("/api");
+  const response = await fetch("@/app/api");
   const data: Data[] = await response.json();
 
   return (

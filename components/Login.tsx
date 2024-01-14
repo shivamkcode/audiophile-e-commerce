@@ -19,7 +19,7 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("/api/users/login", {
+      const response = await fetch("@/app/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
   };
 
   const handleSignup = async () => {
-    const response = await fetch("/api/users/signup", {
+    const response = await fetch("@/app/api/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
