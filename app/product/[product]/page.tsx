@@ -6,7 +6,7 @@ import Quantity from "@/components/Quantity";
 import Image from "next/image";
 
 const Product = async ({ params }: { params: { product: string } }) => {
-  const response = await fetch("http://localhost:3000/api");
+  const response = await fetch("/api");
   const data: Data[] = await response.json();
   const id = params.product;
   const selectedProduct = data.find((product) => product.id.toString() === id);
