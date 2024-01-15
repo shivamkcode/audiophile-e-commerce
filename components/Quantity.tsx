@@ -13,9 +13,6 @@ interface Props {
 
 const Quantity: React.FC<Props> = ({ productId, price, button, cart }) => {
   const [count, setCount] = useState(cart ? cart.quantity : 1);
-  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
-    return
-  }
 
   const addToCart = async ( products: CartType[] ) => {
     const token = localStorage.getItem("token");

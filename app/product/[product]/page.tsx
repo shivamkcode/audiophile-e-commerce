@@ -6,9 +6,7 @@ import Quantity from "@/components/Quantity";
 import Image from "next/image";
 
 const Product = async ({ params }: { params: { product: string } }) => {
-  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
-    return
-  }
+
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
   const data: Data[] = await response.json();
   const id = params.product;

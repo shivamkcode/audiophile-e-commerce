@@ -16,9 +16,6 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState(false);
-  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
-    return
-  }
 
   const handleLogin = async () => {
     try {

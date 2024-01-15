@@ -55,9 +55,7 @@ const Checkout = () => {
     (total, item) => total + item.price * item.quantity,
     0
     );
-    if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
-      return
-    }
+
     
   const getData = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
@@ -83,10 +81,10 @@ const Checkout = () => {
     }
   };
 
-  // useEffect(() => {
-  //   getData();
-  //   getCart();
-  // }, []);
+  useEffect(() => {
+    getData();
+    getCart();
+  }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

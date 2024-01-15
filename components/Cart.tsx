@@ -19,10 +19,6 @@ const Cart = () => {
   const [cart, setCart] = useState<CartData[]>([]);
   const [data, setData] = useState<Data[]>([]);
   const [counters, setCounters] = useState<{ [productId: number]: number }>({});
-
-  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
-    return
-  }
   
   const getData = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
@@ -67,10 +63,10 @@ const Cart = () => {
     }
   };
 
-  // useEffect(() => {
-  //   getData()
-  //   getCart();
-  // }, []);
+  useEffect(() => {
+    getData()
+    getCart();
+  }, []);
 
   const toggleCart = () => {
     const token = localStorage.getItem("token");
