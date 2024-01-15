@@ -19,9 +19,13 @@ const Cart = () => {
   const [cart, setCart] = useState<CartData[]>([]);
   const [data, setData] = useState<Data[]>([]);
   const [counters, setCounters] = useState<{ [productId: number]: number }>({});
+
+  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
+    return
+  }
   
   const getData = async () => {
-    const response = await fetch("@/app/api");
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
     const data = await response.json();
     setData(data);
   };
@@ -29,7 +33,7 @@ const Cart = () => {
   const getCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("@/app/api/cart", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`, {
         headers: {
           "Content-Type": "application/json",
           authorization: `${token}`,
@@ -47,7 +51,7 @@ const Cart = () => {
   const deleteCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("@/app/api/cart", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -63,10 +67,10 @@ const Cart = () => {
     }
   };
 
-  useEffect(() => {
-    getData()
-    getCart();
-  }, []);
+  // useEffect(() => {
+  //   getData()
+  //   getCart();
+  // }, []);
 
   const toggleCart = () => {
     const token = localStorage.getItem("token");
@@ -108,7 +112,7 @@ const Cart = () => {
     }));
 
     try {
-      const response = await fetch("@/app/api/cart", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

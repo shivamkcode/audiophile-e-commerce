@@ -16,7 +16,10 @@ export const generateMetadata = ({
 };
 
 const Categories = async ({ params }: { params: { category: string } }) => {
-  const response = await fetch("@/app/api");
+  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
+    return
+  }
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
   const data: Data[] = await response.json();
   const category = params.category;
 

@@ -11,19 +11,16 @@ interface Props {
   cart: CartData | null;
 }
 
-// interface CartType{
-//   productId: number | undefined;
-//   count: number;
-//   price: number | undefined;
-// }
-
 const Quantity: React.FC<Props> = ({ productId, price, button, cart }) => {
   const [count, setCount] = useState(cart ? cart.quantity : 1);
+  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
+    return
+  }
 
   const addToCart = async ( products: CartType[] ) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:3000/api/cart", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

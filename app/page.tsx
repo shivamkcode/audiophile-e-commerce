@@ -55,7 +55,10 @@ export interface Data {
 }
 
 const Home = async () => {
-  const response = await fetch("@/app/api");
+  if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
+    return
+  }
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
   const data: Data[] = await response.json();
 
   return (

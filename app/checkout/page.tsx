@@ -54,10 +54,13 @@ const Checkout = () => {
   const total = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
-  );
-
+    );
+    if (!process.env.NEXT_PUBLIC_BASE_API_URL) {
+      return
+    }
+    
   const getData = async () => {
-    const response = await fetch("@/app/api");
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
     const data = await response.json();
     setData(data);
   };
@@ -65,7 +68,7 @@ const Checkout = () => {
   const getCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("@/app/api/cart", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`, {
         headers: {
           "Content-Type": "application/json",
           authorization: `${token}`,
@@ -80,10 +83,10 @@ const Checkout = () => {
     }
   };
 
-  useEffect(() => {
-    getData();
-    getCart();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  //   getCart();
+  // }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
