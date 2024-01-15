@@ -70,6 +70,7 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
                 X
               </h3>
             </div>
+            <p className="text-red-500 font-bold -mb-3 text-sm">{emailError ? 'Wrong format: Please enter a valid email' : ''}</p>
             <Input
               type={"email"}
               placeholder={"email"}
@@ -86,7 +87,7 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
                 capital={false}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <span className="absolute right-3 opacity-50 cursor-pointer hover:text-sky-800 hover:font-bold" onClick={() => setShowPassword(!showPassword)}>
+              <span className="absolute right-3 text-black opacity-50 cursor-pointer hover:text-sky-800 hover:font-bold" onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? "Hide" : "Show"}
               </span>
             </div>
@@ -144,7 +145,7 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
                 capital={false}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <span onClick={() => setShowPassword(!showPassword)}>
+              <span className="absolute right-3 text-black opacity-50 cursor-pointer hover:text-sky-800 hover:font-bold" onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? "Hide" : "Show"}
               </span>
             </div>
