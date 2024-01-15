@@ -8,9 +8,10 @@ interface ButtonProps {
   onClick: () => void;
   disabled: boolean;
   children: React.ReactNode | null;
+  width?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ color, onClick, disabled, children }) => {
+const Button: React.FC<ButtonProps> = ({ color, onClick, disabled, width, children }) => {
   const [showLogin, setShowLogin] = useState(false);
   const authenticate = async () => {
     const token = localStorage.getItem("token");
@@ -26,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({ color, onClick, disabled, children }) =
     backgroundColor:
       color === "o" ? "#D87D4A" : color === "b" ? "#000" : "transparent",
     color: color ? "white" : "black",
-    width: "auto",
+    width: width ? width :"auto",
     padding: "10px 20px",
     opacity: disabled ? 0.5 : 1,
     border: color ? "none" : "1px solid black",

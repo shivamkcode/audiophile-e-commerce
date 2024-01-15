@@ -19,9 +19,11 @@ const Cart = () => {
   const [cart, setCart] = useState<CartData[]>([]);
   const [data, setData] = useState<Data[]>([]);
   const [counters, setCounters] = useState<{ [productId: number]: number }>({});
-  
+
   const getData = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`
+    );
     const data = await response.json();
     setData(data);
   };
@@ -29,12 +31,15 @@ const Cart = () => {
   const getCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `${token}`,
+          },
+        }
+      );
       if (response.ok) {
         const carts = await response.json();
         setCart(carts.data);
@@ -47,13 +52,16 @@ const Cart = () => {
   const deleteCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `${token}`,
+          },
+        }
+      );
       if (response.ok) {
         console.log("Deleted Successfully");
         getCart();
@@ -64,7 +72,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    getData()
+    getData();
     getCart();
   }, []);
 
@@ -108,18 +116,21 @@ const Cart = () => {
     }));
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token, products: updatedProducts }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token, products: updatedProducts }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         console.log(data.message);
-        setShowCart(false)
+        setShowCart(false);
       } else {
         console.error("Failed to add products to cart");
       }
@@ -148,7 +159,7 @@ const Cart = () => {
                 Cart ({cart.length})
               </h2>
               <span
-                onClick={() => cart.length > 0 ? deleteCart() : false}
+                onClick={() => (cart.length > 0 ? deleteCart() : false)}
                 className="opacity-50 cursor-pointer hover:text-red-500"
               >
                 Remove all
@@ -214,9 +225,16 @@ const Cart = () => {
                   .toLocaleString("en-US")}
               </h3>
             </div>
-            <Button color="o" disabled={cart.length === 0} onClick={UpdateCart}>
-              <Link href={'/checkout'}>Checkout</Link>
-            </Button>
+            <Link href={"/checkout"}>
+              <Button
+                color="o"
+                width="100%"
+                disabled={cart.length === 0}
+                onClick={UpdateCart}
+              >
+                Checkout
+              </Button>
+            </Link>
           </div>
         </>
       )}

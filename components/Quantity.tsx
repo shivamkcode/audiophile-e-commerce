@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Button from "./Button";
 import { CartData } from "@/components/Cart";
-import { CartType } from '@/app/api/cart/route'
+import { CartType } from '@/app/api/cart/route';
 
 interface Props {
   productId: number | undefined;
@@ -13,6 +13,7 @@ interface Props {
 
 const Quantity: React.FC<Props> = ({ productId, price, button, cart }) => {
   const [count, setCount] = useState(cart ? cart.quantity : 1);
+  const [text, setText] = useState('Add to cart')
 
   const addToCart = async ( products: CartType[] ) => {
     const token = localStorage.getItem("token");
@@ -26,8 +27,8 @@ const Quantity: React.FC<Props> = ({ productId, price, button, cart }) => {
       });
       if (response.ok) {
         console.log("Item added successfully!");
-        console.log(count);
         setCount(1)
+        setText('Add to cart')
       } else{
         console.log('Failed to add product')
       }
@@ -39,6 +40,7 @@ const Quantity: React.FC<Props> = ({ productId, price, button, cart }) => {
   const handleClick = () => {
     const token = localStorage.getItem("token");
     if (token) {
+      setText('Adding to cart...')
       addToCart([{productId: productId, count: count, price: price}]);
     }
   };
@@ -67,7 +69,7 @@ const Quantity: React.FC<Props> = ({ productId, price, button, cart }) => {
         }}
         color="o"
       >
-        Add to cart
+        {text}
       </Button>
     </div>
   );

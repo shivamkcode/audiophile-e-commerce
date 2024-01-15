@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({
     <input
       id={name}
       name={name}
-      className={`hover:scale-[0.99] caret-[#D87D4A] text-black border border-[#CFCFCF] focus:border-[#D87D4A] focus:outline-none ${err ? 'text-[#CD2C2C] border-[#CD2C2C] border-2' : ''}`}
+      className={`hover:scale-[0.99] caret-[#D87D4A]  border  focus:border-[#D87D4A] focus:outline-none ${err ? 'text-[#CD2C2C] border-[#CD2C2C] border-2' : 'border-[#CFCFCF] text-black'}`}
       onBlur={handleEmailBlur}
       style={style}
       type={type}
