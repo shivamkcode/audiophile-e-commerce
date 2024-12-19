@@ -11,7 +11,6 @@ interface LoginType {
   export async function POST(req: Request) {
       const body = await req.json();
       const { email, password }: LoginType = body;
-  
       const existingUser = await User.findOne({ where: { email } });
   
       if (!existingUser) {

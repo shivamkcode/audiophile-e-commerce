@@ -183,7 +183,6 @@ const Home = async () => {
             />
           </div>
         </div>
-
         <BestGear />
       </section>
     </main>

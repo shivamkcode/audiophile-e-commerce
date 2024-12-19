@@ -73,6 +73,12 @@ export async function DELETE(req: Request) {
         { status: 200 }
       );
     }
+    else{
+      return NextResponse.json(
+        { error: "Failed to delete carts" },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to delete carts" },
