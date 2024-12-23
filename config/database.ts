@@ -32,6 +32,7 @@ const sequelize = new Sequelize(`${process.env.DB_STRING}`, {
     await sequelize.sync();
     console.log("Connection has been established successfully.");
   } catch (error) {
+    console.log(`${process.env.DB_STRING}`,'dbString')
     console.error("Unable to connect to the database:", error);
   }
 })();
