@@ -1,5 +1,4 @@
 import LinkButton from '@/components/Link'
-
 import Image from "next/image";
 import Hero from "../public/assets/home/desktop/image-hero.jpg";
 import HeroMobile from "../public/assets/home/mobile/image-header.jpg";
@@ -142,6 +141,8 @@ const Home = async () => {
             className="h-full w-auto hidden md:flex rounded-lg"
             src={ZX7}
             alt="product"
+            height={1000}
+            width={1000}
           />
           <Image
             className="h-full w-auto hidden sm:flex md:hidden rounded-lg"

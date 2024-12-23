@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
+"use client";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Manrope } from "next/font/google";
-
-export const metadata: Metadata = {
-  title: "audiophile",
-  description: "ecommerce site created using Next.js by Shivam Kumar",
-};
+import { AlertProvider } from "./alertContext";
+import Alert from "@/components/Alert";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -22,13 +19,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/svg+xml" href="/assets/shared/desktop/logo.svg" />
+        <title>audiophile</title>
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="/assets/shared/desktop/logo.svg"
+        />
       </head>
-      <body className={`${manrope.className} bg-[#FAFAFA] `}>
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
+      <AlertProvider>
+        <body className={`${manrope.className} bg-[#FAFAFA] `}>
+          <Alert />
+          <Navbar />
+          {children}
+          <Footer />
+        </body>
+      </AlertProvider>
     </html>
   );
 }

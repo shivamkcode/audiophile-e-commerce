@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
+import { useAlert } from "@/app/alertContext";
 
 interface LoginProp {
   showLogin: boolean;
@@ -15,7 +16,8 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
   const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-  const [emailError, setEmailError] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const { setAlert } = useAlert();
 
   const handleLogin = async () => {
     try {
@@ -29,10 +31,12 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
       if (response.ok) {
         const token = await response.json();
         localStorage.setItem("token", token.data);
-        console.log("Login successful!", "success");
+        setAlert("Login successful!", 'success');
+      } else {
+        setAlert("Login failed.", 'error');
       }
     } catch (error) {
-      console.log("Login failed.", error);
+      setAlert("Login failed.", 'error');
     }
   };
 
@@ -47,11 +51,10 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
 
     if (response.ok) {
       const token = await response.json();
-      console.log(token);
-      console.log("Signup successful!", "success");
+      setAlert("Signup successful!", 'success');
       setShowLogin(true);
     } else {
-      console.log("Signup failed.", "error");
+      setAlert("Signup failed.", 'error');
     }
   };
 
@@ -62,7 +65,7 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
           <div className="fixed w-screen h-screen top-0 left-0 bg-black opacity-50 z-[999]" />
           <div className="fixed bg-white p-10 w-96 flex flex-col gap-4 rounded-lg left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-[1000]">
             <div className="flex justify-between text-black items-center">
-              <h1 className="text-3xl font-bold ">Login</h1>
+              <h1 className="text-3xl font-bold">Login</h1>
               <h3
                 className="hover:scale-110 hover:text-red-500 text-2xl font-bold cursor-pointer"
                 onClick={() => setShowLogin(false)}
@@ -70,10 +73,10 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
                 X
               </h3>
             </div>
-            <p className="text-red-500 font-bold -mb-3 text-sm">{emailError ? 'Wrong format: Please enter a valid email' : ''}</p>
+            {emailError && <p className="text-[#CD2C2C] text-sm">{emailError}</p>}
             <Input
               type={"email"}
-              placeholder={"email"}
+              placeholder={"Email"}
               value={email}
               capital={false}
               onChange={(e) => setEmail(e.target.value)}
@@ -93,12 +96,14 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
             </div>
             <Button
               color="o"
-              disabled={!email || !password || emailError}
+              disabled={!email || !password || !!emailError}
               onClick={() => {
-                setShowLogin(false);
                 handleLogin();
+                setShowLogin(false);
               }}
-              >Login</Button>
+            >
+              Login
+            </Button>
             <Button
               color="b"
               disabled={false}
@@ -106,7 +111,9 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
                 setShowLogin(false);
                 setShowSignup(true);
               }}
-            >Create New Account</Button>
+            >
+              Create New Account
+            </Button>
           </div>
         </>
       )}
@@ -115,7 +122,7 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
           <div className="fixed w-screen h-screen top-0 left-0 bg-black opacity-50 z-[999]" />
           <div className="fixed bg-white p-10 w-96 flex flex-col gap-4 rounded-lg left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-[1001]">
             <div className="flex justify-between text-black items-center">
-              <h1 className="text-3xl font-bold ">Signup</h1>
+              <h1 className="text-3xl font-bold">Signup</h1>
               <h3
                 className="hover:scale-110 hover:text-red-500 text-2xl font-bold cursor-pointer"
                 onClick={() => setShowSignup(false)}
@@ -130,14 +137,16 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
               capital={false}
               onChange={(e) => setUsername(e.target.value)}
             />
+            {emailError && <p className="text-red-500 font-bold -mb-3 text-sm">{emailError}</p>}
             <Input
               type={"email"}
-              placeholder={"email"}
+              placeholder={"Email"}
               value={email}
               capital={false}
               onChange={(e) => setEmail(e.target.value)}
+              setEmailError={setEmailError}
             />
-            <div>
+            <div className="flex items-center relative">
               <Input
                 type={showPassword ? "text" : "password"}
                 placeholder={"Password"}
@@ -155,8 +164,10 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
                 handleSignup();
                 setShowSignup(false);
               }}
-              disabled={!username || !password || !emailError}
-            >Create Account</Button>
+              disabled={!username || !password || !!emailError}
+            >
+              Create Account
+            </Button>
           </div>
         </>
       )}

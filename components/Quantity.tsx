@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "./Button";
 import { CartData } from "@/components/Cart";
 import { CartType } from '@/app/api/cart/route';
+import { useAlert } from "@/app/alertContext";
 
 interface Props {
   productId: number | undefined;
@@ -11,9 +12,10 @@ interface Props {
   cart: CartData | null;
 }
 
-const Quantity: React.FC<Props> = ({ productId, price, button, cart }) => {
+const Quantity: React.FC<Props> = ({ productId, price, cart }) => {
   const [count, setCount] = useState(cart ? cart.quantity : 1);
   const [text, setText] = useState('Add to cart')
+  const {setAlert} = useAlert()
 
   const addToCart = async ( products: CartType[] ) => {
     const token = localStorage.getItem("token");
@@ -26,14 +28,13 @@ const Quantity: React.FC<Props> = ({ productId, price, button, cart }) => {
         body: JSON.stringify({ token, products }),
       });
       if (response.ok) {
-        console.log("Item added successfully!");
-        setCount(1)
         setText('Add to cart')
+        setAlert("Item added successfully!", 'success');
       } else{
-        console.log('Failed to add product')
+        setAlert('Failed to add product', 'error')
       }
     } catch (error) {
-      console.log("Error adding item", error);
+      setAlert("Error adding item", 'error');
     }
   };
 

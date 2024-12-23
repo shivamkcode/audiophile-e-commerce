@@ -1,23 +1,25 @@
-import Sequelize, { Model } from 'sequelize'
-import sequelize from '@/config/database'
+import { DataTypes, Model } from "sequelize";
+import sequelize from "@/config/database";
 
-interface UserInstance extends Model {
-    password: string;
-    username: string;
-    email: string;
-}
+class User extends Model {}
 
-const User = sequelize.define<UserInstance>(
-    "user",
-    {
-      username: Sequelize.STRING,
-      email: Sequelize.STRING,
-      password: Sequelize.STRING,
-    },
-    {
-      updatedAt: false,
-    }
-  );
+User.init({
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+}, {
+  sequelize,
+  modelName: "a_users",
+});
 
-  export default User
-
+export default User;

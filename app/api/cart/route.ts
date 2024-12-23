@@ -21,10 +21,10 @@ export async function GET(req: Request) {
 
       return NextResponse.json({ data: carts }, { status: 200 });
     } else {
-      NextResponse.json({ error: "Failed to get cart" }, { status: 500 });
+      return NextResponse.json({ error: "Failed" }, { status: 500 });
     }
   } catch (error) {
-    NextResponse.json({ error: "Failed to get cart" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to get cart" }, { status: 500 });
   }
 }
 
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } catch (error) {
-    NextResponse.json({ error: "failed to add to cart!" }, { status: 500 });
+    return NextResponse.json({ error: "failed to add to cart!" }, { status: 500 });
   }
 }
 
@@ -72,8 +72,7 @@ export async function DELETE(req: Request) {
         { message: "Cart deleted successfully" },
         { status: 200 }
       );
-    }
-    else{
+    } else {
       return NextResponse.json(
         { error: "Failed to delete carts" },
         { status: 500 }

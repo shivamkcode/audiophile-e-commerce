@@ -1,30 +1,32 @@
-import Sequelize from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "@/config/database";
 
-const Cart = sequelize.define("cart", {
+class Cart extends Model {}
+
+Cart.init({
   userId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "user",
+      model: "a_users",
       key: "id",
     },
   },
-
   productId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-
   quantity: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     defaultValue: 1,
   },
-
   price: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
+}, {
+  sequelize,
+  modelName: "a_cart",
 });
 
-export default Cart
+export default Cart;

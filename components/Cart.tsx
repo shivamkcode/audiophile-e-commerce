@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Data } from "@/app/page";
 import Button from "./Button";
 import Link from "next/link";
+import { useAlert } from "@/app/alertContext";
 
 export interface CartData {
   id: number;
@@ -19,6 +20,7 @@ const Cart = () => {
   const [cart, setCart] = useState<CartData[]>([]);
   const [data, setData] = useState<Data[]>([]);
   const [counters, setCounters] = useState<{ [productId: number]: number }>({});
+  const { setAlert } = useAlert();
 
   const getData = async () => {
     const response = await fetch(
@@ -35,7 +37,7 @@ const Cart = () => {
         `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/cart`,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", 
             authorization: `${token}`,
           },
         }
@@ -45,7 +47,7 @@ const Cart = () => {
         setCart(carts.data);
       }
     } catch (error) {
-      console.log("failed to get cart", error);
+      setAlert("Failed to get cart", 'error');
     }
   };
 
@@ -63,11 +65,11 @@ const Cart = () => {
         }
       );
       if (response.ok) {
-        console.log("Deleted Successfully");
+        setAlert("Cart Deleted Successfully",'success');
         getCart();
       }
     } catch (error) {
-      console.log("failed to delete cart");
+      setAlert("Failed to delete cart", 'error');
     }
   };
 
@@ -91,27 +93,35 @@ const Cart = () => {
     }
   };
 
-  const handleIncrement = (productId: number) => {
-    setCounters((prevCounters) => ({
-      ...prevCounters,
-      [productId]: (prevCounters[productId] || 0) + 1,
-    }));
+  const handleIncrement = async (productId: number) => {
+    setCounters((prevCounters) => {
+      const newCounters = {
+        ...prevCounters,
+        [productId]: (prevCounters[productId] || 0) + 1,
+      };
+      UpdateCart(newCounters);
+      return newCounters;
+    });
   };
 
-  const handleDecrement = (productId: number) => {
-    if (counters[productId] >= 0) {
-      setCounters((prevCounters) => ({
-        ...prevCounters,
-        [productId]: prevCounters[productId] - 1,
-      }));
+  const handleDecrement = async (productId: number) => {
+    if (counters[productId] > 0) {
+      setCounters((prevCounters) => {
+        const newCounters = {
+          ...prevCounters,
+          [productId]: prevCounters[productId] - 1,
+        };
+        UpdateCart(newCounters);
+        return newCounters;
+      });
     }
   };
 
-  const UpdateCart = async () => {
+  const UpdateCart = async (updatedCounters: { [productId: number]: number }) => {
     const token = localStorage.getItem("token");
     const updatedProducts = cart.map((item) => ({
       productId: item.productId,
-      count: counters[item.productId] || item.quantity,
+      count: updatedCounters[item.productId] || item.quantity,
       price: item.price,
     }));
 
@@ -129,13 +139,12 @@ const Cart = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data.message);
-        setShowCart(false);
+        setAlert(data.message, 'success');
       } else {
-        console.error("Failed to add products to cart");
+        setAlert("Failed to update cart",'error');
       }
     } catch (error) {
-      console.error("Failed to add products to cart", error);
+      setAlert("Failed to update cart",'error');
     }
   };
 
@@ -152,7 +161,7 @@ const Cart = () => {
       </div>
       {showCart && (
         <>
-          <div className="fixed w-screen h-screen top-0 left-0 bg-black opacity-50 -z-40" />
+          <div className="fixed w-screen h-screen top-0 left-0 bg-black opacity-50 -z-40" onClick={toggleCart}/>
           <div className="absolute mt-6 top-[70px] left-2/4 -translate-x-2/4 sm:left-auto sm:translate-x-0 sm:right-10 md:right-0 w-11/12 sm:w-96 bg-white z-50 text-black p-8 rounded-lg flex flex-col gap-6">
             <div className="flex justify-between">
               <h2 className="text-lg font-bold tracking-widest ">
@@ -230,7 +239,10 @@ const Cart = () => {
                 color="o"
                 width="100%"
                 disabled={cart.length === 0}
-                onClick={UpdateCart}
+                onClick={() => {
+                  UpdateCart(counters);
+                  setShowCart(false);
+                }}
               >
                 Checkout
               </Button>

@@ -49,7 +49,7 @@ const Checkout = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [cart, setCart] = useState<CartData[]>([]);
   const [data, setData] = useState<Data[]>([]);
-  const [emailError, setEmailError] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [showThankYou, setShowThankYou] = useState(false);
   const total = cart.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -359,7 +359,7 @@ const Checkout = () => {
               state.country === "" ||
               (state.paymentMethod === "e-Money" &&
                 (state.eMoneyNumber === "" || state.eMoneyPin === "")) ||
-              emailError
+              emailError !== null
             }
             onClick={() => setShowThankYou(true)}
           >

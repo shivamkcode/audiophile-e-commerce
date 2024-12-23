@@ -8,7 +8,7 @@ Welcome to the audiophile Ecommerce Website! This is a full-stack ecommerce webs
 - Product catalog: Users can browse a catalog of headphones, speakers, and TWS earphones.
 - Cart management: Users can add products to their cart, update quantities, and remove items.
 - Checkout process: Users can fill out a form with their shipping and payment information to complete their purchase.
-- Order confirmation: After completing the checkout process, users receive a thank you page confirming their order.
+- Order confirmation: After completing the checkout process, users receive a thank you page confirming their order. 
 
 ## Technologies Used
 
