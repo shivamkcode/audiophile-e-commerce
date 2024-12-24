@@ -6,7 +6,6 @@ import Quantity from "@/components/Quantity";
 import Image from "next/image";
 
 const Product = async ({ params }: { params: { product: string } }) => {
-
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/`);
   const data: Data[] = await response.json();
   const id = params.product;
@@ -43,9 +42,13 @@ const Product = async ({ params }: { params: { product: string } }) => {
             {selectedProduct?.description}
           </p>
           <h4 className="text-lg font-bold mb-12">{`$ ${selectedProduct?.price}`}</h4>
-          <Quantity cart={null} button={true} productId={selectedProduct?.id} price={selectedProduct?.price}/>
+          <Quantity
+            button={true}
+            productId={selectedProduct?.id}
+            price={selectedProduct?.price}
+          />
         </div>
-      </div> 
+      </div>
 
       <div className="flex flex-col md:flex-row gap-20 lg:gap-32 mb-20 lg:mb-40">
         <div className="flex-1">
@@ -148,7 +151,9 @@ const Product = async ({ params }: { params: { product: string } }) => {
                 className=""
                 text="See product"
                 color="o"
-                href={`/product/${data.find((item) => item.slug === product.slug)?.id}`}
+                href={`/product/${
+                  data.find((item) => item.slug === product.slug)?.id
+                }`}
               />
             </div>
           ))}

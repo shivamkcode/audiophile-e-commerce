@@ -65,23 +65,36 @@ export async function POST(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const token = req.headers.get("authorization");
+    const body = await req.json();
+    const { productId } = body;
+
     if (token) {
       const { user } = jwt.verify(token, "secretKey") as JwtPayload;
-      await Cart.destroy({ where: { userId: user.id } });
-      return NextResponse.json(
-        { message: "Cart deleted successfully" },
-        { status: 200 }
-      );
+
+      if (productId) {
+        await Cart.destroy({ where: { userId: user.id, productId } });
+        return NextResponse.json(
+          { message: "Item deleted successfully" },
+          { status: 200 }
+        );
+      } else {
+        await Cart.destroy({ where: { userId: user.id } });
+        return NextResponse.json(
+          { message: "Cart deleted successfully" },
+          { status: 200 }
+        );
+      }
     } else {
       return NextResponse.json(
-        { error: "Failed to delete carts" },
+        { error: "Failed to delete item/cart" },
         { status: 500 }
       );
     }
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete carts" },
+      { error: "Failed to delete item/cart" },
       { status: 500 }
     );
   }
 }
+

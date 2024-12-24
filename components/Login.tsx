@@ -14,47 +14,57 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
   const { setAlert } = useAlert();
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
       if (response.ok) {
         const token = await response.json();
         localStorage.setItem("token", token.data);
-        setAlert("Login successful!", 'success');
+        setAlert("Login successful!", "success");
       } else {
-        setAlert("Login failed.", 'error');
+        setAlert("Login failed.", "error");
       }
     } catch (error) {
-      setAlert("Login failed.", 'error');
+      setAlert("Login failed.", "error");
     }
   };
 
   const handleSignup = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, email, password }),
+        }
+      );
 
-    if (response.ok) {
-      const token = await response.json();
-      setAlert("Signup successful!", 'success');
-      setShowLogin(true);
-    } else {
-      setAlert("Signup failed.", 'error');
+      if (response.ok) {
+        const token = await response.json();
+        setAlert("Signup successful!", "success");
+        setShowLogin(true);
+      } else {
+        setAlert("Signup failed.", "error");
+      }
+    } catch (error) {
+      setAlert("Signup failed.", "error");
     }
   };
 
@@ -73,10 +83,12 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
                 X
               </h3>
             </div>
-            {emailError && <p className="text-[#CD2C2C] text-sm">{emailError}</p>}
+            {emailError && (
+              <p className="text-[#CD2C2C] text-sm">{emailError}</p>
+            )}
             <Input
-              type={"email"}
-              placeholder={"Email"}
+              type="email"
+              placeholder="Email"
               value={email}
               capital={false}
               onChange={(e) => setEmail(e.target.value)}
@@ -85,18 +97,25 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
             <div className="flex items-center relative">
               <Input
                 type={showPassword ? "text" : "password"}
-                placeholder={"Password"}
+                placeholder="Password"
                 value={password}
                 capital={false}
                 onChange={(e) => setPassword(e.target.value)}
+                setPasswordError={setPasswordError}
               />
-              <span className="absolute right-3 text-black opacity-50 cursor-pointer hover:text-sky-800 hover:font-bold" onClick={() => setShowPassword(!showPassword)}>
+              <span
+                className="absolute right-3 text-black opacity-50 cursor-pointer hover:text-sky-800 hover:font-bold"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? "Hide" : "Show"}
               </span>
             </div>
+            {passwordError && (
+              <p className="text-[#CD2C2C] text-sm">{passwordError}</p>
+            )}
             <Button
               color="o"
-              disabled={!email || !password || !!emailError}
+              disabled={!email || !password || !!emailError || !!passwordError}
               onClick={() => {
                 handleLogin();
                 setShowLogin(false);
@@ -110,6 +129,11 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
               onClick={() => {
                 setShowLogin(false);
                 setShowSignup(true);
+                setUsername("");
+                setPassword("");
+                setEmail("");
+                setEmailError(null);
+                setPasswordError(null);
               }}
             >
               Create New Account
@@ -132,15 +156,19 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
             </div>
             <Input
               type="text"
-              placeholder={"Username"}
+              placeholder="Username"
               value={username}
               capital={false}
               onChange={(e) => setUsername(e.target.value)}
             />
-            {emailError && <p className="text-red-500 font-bold -mb-3 text-sm">{emailError}</p>}
+            {emailError && (
+              <p className="text-red-500 font-bold -mb-3 text-sm">
+                {emailError}
+              </p>
+            )}
             <Input
-              type={"email"}
-              placeholder={"Email"}
+              type="email"
+              placeholder="Email"
               value={email}
               capital={false}
               onChange={(e) => setEmail(e.target.value)}
@@ -149,24 +177,48 @@ const Login: React.FC<LoginProp> = ({ showLogin, setShowLogin }) => {
             <div className="flex items-center relative">
               <Input
                 type={showPassword ? "text" : "password"}
-                placeholder={"Password"}
+                placeholder="Password"
                 value={password}
                 capital={false}
                 onChange={(e) => setPassword(e.target.value)}
+                setPasswordError={setPasswordError}
               />
-              <span className="absolute right-3 text-black opacity-50 cursor-pointer hover:text-sky-800 hover:font-bold" onClick={() => setShowPassword(!showPassword)}>
+              <span
+                className="absolute right-3 text-black opacity-50 cursor-pointer hover:text-sky-800 hover:font-bold"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? "Hide" : "Show"}
               </span>
             </div>
+            {passwordError && (
+              <p className="text-[#CD2C2C] text-sm">{passwordError}</p>
+            )}
             <Button
               color="o"
               onClick={() => {
                 handleSignup();
                 setShowSignup(false);
               }}
-              disabled={!username || !password || !!emailError}
+              disabled={
+                !username || !password || !!emailError || !!passwordError
+              }
             >
               Create Account
+            </Button>
+            <Button
+              color="b"
+              disabled={false}
+              onClick={() => {
+                setShowLogin(true);
+                setShowSignup(false);
+                setUsername("");
+                setPassword("");
+                setEmail("");
+                setEmailError(null);
+                setPasswordError(null);
+              }}
+            >
+              Already Have an Account?
             </Button>
           </div>
         </>
