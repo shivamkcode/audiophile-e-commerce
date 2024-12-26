@@ -219,9 +219,11 @@ const Cart = () => {
   return (
     <>
       <div className="group rounded-3xl overflow-hidden flex items-center gap-2">
-        <h5 className="text-sm">
+        {user && (
+          <h5 className="text-sm">
           Hi, <span className="capitalize">{user?.data.username}</span>
         </h5>
+        )}
         <Button color="" onClick={toggleCart} disabled={false}>
           <Image
             className="group-hover:filter group-hover:brightness-75 group-hover:sepia group-hover:scale-105 cursor-pointer"
