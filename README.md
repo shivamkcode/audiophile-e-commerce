@@ -76,6 +76,10 @@ To run the website locally, follow these steps:
 
 ![Homepage](https://res.cloudinary.com/ddmxmmot6/image/upload/v1734921275/audiophile-e-commerce-three.vercel.app__dkoi5x.png)
 
+### Checkout Page
+
+![Checkout Page](https://res.cloudinary.com/ddmxmmot6/image/upload/v1735239039/audiophile-e-commerce-three.vercel.app_checkout_nlgjvn.png)
+
 ## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
